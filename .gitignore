@@ -25,4 +25,13 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
+
+# Environment
+.env*
+!.env.example
+
+# Deployment
 .vercel
+
+# Testing
+.playwright-mcp/
