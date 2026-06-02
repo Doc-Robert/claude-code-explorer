@@ -16,34 +16,7 @@ const scrollTo = (id: string) => {
   <nav class="nav" :class="{ scrolled: isScrolled }">
     <div class="nav-inner">
       <div class="nav-logo" @click="scrollTo('overview')">
-        <!-- Claude Code 吉祥物 Clawd -->
-        <svg class="clawd" width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- 身体 -->
-          <ellipse cx="16" cy="18" rx="10" ry="8" fill="#E8A849"/>
-          <!-- 眼睛 -->
-          <circle cx="12" cy="15" r="2.5" fill="white"/>
-          <circle cx="20" cy="15" r="2.5" fill="white"/>
-          <circle cx="12.5" cy="14.5" r="1.2" fill="#1a1a1a"/>
-          <circle cx="20.5" cy="14.5" r="1.2" fill="#1a1a1a"/>
-          <!-- 嘴巴 -->
-          <path d="M13 20 Q16 23 19 20" stroke="#1a1a1a" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-          <!-- 左钳子 -->
-          <path d="M6 14 Q4 10 3 12 Q2 14 5 15" fill="#E8A849" stroke="#D4952E" stroke-width="0.8"/>
-          <path d="M6 14 Q3 16 4 18 Q5 19 7 17" fill="#E8A849" stroke="#D4952E" stroke-width="0.8"/>
-          <!-- 右钳子 -->
-          <path d="M26 14 Q28 10 29 12 Q30 14 27 15" fill="#E8A849" stroke="#D4952E" stroke-width="0.8"/>
-          <path d="M26 14 Q29 16 28 18 Q27 19 25 17" fill="#E8A849" stroke="#D4952E" stroke-width="0.8"/>
-          <!-- 触角 -->
-          <path d="M13 10 Q11 6 10 8" stroke="#E8A849" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-          <circle cx="10" cy="7.5" r="1.5" fill="#E8A849"/>
-          <path d="M19 10 Q21 6 22 8" stroke="#E8A849" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-          <circle cx="22" cy="7.5" r="1.5" fill="#E8A849"/>
-          <!-- 腿 -->
-          <path d="M10 24 Q9 27 8 26" stroke="#D4952E" stroke-width="1.2" stroke-linecap="round"/>
-          <path d="M14 25 Q13 28 12 27" stroke="#D4952E" stroke-width="1.2" stroke-linecap="round"/>
-          <path d="M18 25 Q19 28 20 27" stroke="#D4952E" stroke-width="1.2" stroke-linecap="round"/>
-          <path d="M22 24 Q23 27 24 26" stroke="#D4952E" stroke-width="1.2" stroke-linecap="round"/>
-        </svg>
+        <img src="/claudecode-color.svg" alt="Claude Code" class="logo-icon" />
         <span class="logo-text">Claude Code <span class="logo-light">Explorer</span></span>
       </div>
       <div class="nav-links">
@@ -91,12 +64,14 @@ const scrollTo = (id: string) => {
   cursor: pointer;
 }
 
-.clawd {
+.logo-icon {
+  width: 28px;
+  height: 28px;
   transition: transform 0.3s ease;
 }
 
-.nav-logo:hover .clawd {
-  transform: rotate(-10deg) scale(1.1);
+.nav-logo:hover .logo-icon {
+  transform: scale(1.1);
 }
 
 .logo-text {
