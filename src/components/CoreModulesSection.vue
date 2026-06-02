@@ -13,14 +13,15 @@ const toggleCode = (id: string) => {
 <template>
   <section class="section" id="core">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header scroll-reveal">
         <span class="section-num">02</span>
         <h2 class="section-title">核心模块详解</h2>
         <p class="section-subtitle">每个模块都承担着特定的职责，共同构成完整的工作流</p>
       </div>
 
-      <div class="modules">
+      <div class="modules scroll-reveal delay-1">
         <div v-for="module in coreModules" :key="module.id" class="module">
+          <div class="module-glow"></div>
           <div class="module-header">
             <div class="module-icon">
               <AppIcons :name="module.icon" :size="24" />
@@ -30,25 +31,36 @@ const toggleCode = (id: string) => {
               <span class="module-size">{{ module.size }}</span>
             </div>
           </div>
-          
+
           <p class="module-desc">{{ module.description }}</p>
-          
+
           <ul class="module-features">
             <li v-for="feature in module.features" :key="feature">{{ feature }}</li>
           </ul>
 
           <p class="module-detail">{{ module.details }}</p>
-          
+
           <div class="code-section">
-            <button class="code-toggle" @click="toggleCode(module.id)">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" :class="{ rotated: expandedCode[module.id] }">
+            <button
+              class="code-toggle"
+              @click="toggleCode(module.id)"
+              :aria-expanded="!!expandedCode[module.id]"
+              :aria-controls="'module-code-' + module.id"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" :class="{ rotated: expandedCode[module.id] }">
                 <path d="M3 5L7 9L11 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
               <span>{{ expandedCode[module.id] ? '收起代码' : '查看源码' }}</span>
               <span class="code-file">{{ module.id }}.ts</span>
             </button>
-            
-            <div v-if="expandedCode[module.id]" class="code-block">
+
+            <div
+              v-if="expandedCode[module.id]"
+              :id="'module-code-' + module.id"
+              class="code-block"
+              role="region"
+              :aria-label="module.name + ' 源码'"
+            >
               <pre><code>{{ module.code }}</code></pre>
             </div>
           </div>
@@ -84,6 +96,15 @@ const toggleCode = (id: string) => {
   margin-bottom: 12px;
 }
 
+.section-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 2px;
+  margin-top: 16px;
+  background: linear-gradient(90deg, var(--color-accent), transparent);
+}
+
 .section-subtitle {
   font-size: 16px;
   color: var(--color-text-secondary);
@@ -102,11 +123,29 @@ const toggleCode = (id: string) => {
   border-radius: var(--radius-lg);
   padding: 24px;
   transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.module-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-secondary), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .module:hover {
-  border-color: var(--color-border-hover);
+  border-color: transparent;
   transform: translateY(-2px);
+  box-shadow: 0 8px 40px rgba(217, 119, 87, 0.08);
+}
+
+.module:hover .module-glow {
+  opacity: 1;
 }
 
 .module-header {
@@ -125,6 +164,7 @@ const toggleCode = (id: string) => {
   background: var(--color-accent-dim);
   border-radius: var(--radius-md);
   color: var(--color-accent);
+  flex-shrink: 0;
 }
 
 .module-info h3 {
@@ -134,7 +174,7 @@ const toggleCode = (id: string) => {
 
 .module-size {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--color-text-muted);
 }
 
@@ -153,7 +193,7 @@ const toggleCode = (id: string) => {
 .module-features li {
   padding: 4px 0 4px 16px;
   position: relative;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--color-text-secondary);
 }
 
@@ -185,14 +225,15 @@ const toggleCode = (id: string) => {
   align-items: center;
   gap: 8px;
   width: 100%;
-  padding: 8px 0;
+  padding: 12px 0;
   background: none;
   border: none;
   cursor: pointer;
   color: var(--color-text-secondary);
   font-size: 13px;
   font-family: var(--font-body);
-  transition: var(--transition);
+  transition: color 0.2s ease;
+  min-height: 44px;
 }
 
 .code-toggle:hover {
@@ -200,7 +241,7 @@ const toggleCode = (id: string) => {
 }
 
 .code-toggle svg {
-  transition: var(--transition);
+  transition: transform 0.3s ease;
 }
 
 .code-toggle svg.rotated {
@@ -210,7 +251,7 @@ const toggleCode = (id: string) => {
 .code-file {
   margin-left: auto;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--color-text-muted);
 }
 
@@ -238,7 +279,7 @@ const toggleCode = (id: string) => {
 
 @keyframes slideDown {
   from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 768px) {
