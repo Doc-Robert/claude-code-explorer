@@ -1,6 +1,6 @@
 # Claude Code Explorer
 
-深入理解 Anthropic Claude Code 的源码架构设计。
+深入理解 Claude Code 的架构设计。
 
 ## 项目简介
 
@@ -56,6 +56,3 @@ claude-code-explorer/
 
 仅供学习研究使用。
 
-## 致谢
-
-基于 Anthropic Claude Code 源码分析制作。
